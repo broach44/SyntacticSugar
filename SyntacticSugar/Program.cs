@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SyntacticSugar
 {
@@ -6,66 +7,36 @@ namespace SyntacticSugar
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Syntactic Sugar");
 
-            public class Bug
-        {
-            /*
-                You can declare a typed public property, make it read-only,
-                and initialize it with a default value all on the same
-                line of code in C#. Readonly properties can be set in the
-                class' constructors, but not by external code.
-            */
-            public string Name { get; } = "";
-            public string Species { get; } = "";
-            public List<string> Predators { get; } = new List<string>();
-            public List<string> Prey { get; } = new List<string>();
-
-            // Convert this readonly property to an expression member
-            public string FormalName
+            var predatorsForBug1 = new List<string>()
             {
-                get
-                {
-                    return $"{this.Name} the {this.Species}";
-                }
-            }
+                "Human", "Raid"
+            };
+            predatorsForBug1.Add("Dinosaurs");
 
-            // Class constructor
-            public Bug(string name, string species, List<string> predators, List<string> prey)
+            var preyForBug1 = new List<string>()
             {
-                this.Name = name;
-                this.Species = species;
-                this.Predators = predators;
-                this.Prey = prey;
-            }
+                "Fly",
+                "Caterpillar"
+            };
 
-            // Convert this method to an expression member
-            public string PreyList()
-            {
-                var commaDelimitedPrey = string.Join(",", this.Prey);
-                return commaDelimitedPrey;
-            }
+            var bug1 = new Bug("Black Widow", "Spider", predatorsForBug1, preyForBug1);
 
-            // Convert this method to an expression member
-            public string PredatorList()
-            {
-                var commaDelimitedPredators = string.Join(",", this.Predators);
-                return commaDelimitedPredators;
-            }
+            Console.WriteLine(bug1.PredatorList());
+            Console.WriteLine(bug1.PreyList());
+            Console.WriteLine(bug1.Eat("Fly"));
 
-            // Convert this to expression method
-            public string Eat(string food)
-            {
-                if (this.Prey.Contains(food))
-                {
-                    return $"{this.Name} ate the {food}.";
-                }
-                else
-                {
-                    return $"{this.Name} is still hungry.";
-                }
-            }
+            var predatorsForBug2 = new List<string>()
+            { "Human", "Mouse", "Bat" };
+            var preyForBug2 = new List<string>()
+            { "Spiders", "Lizards" };
+
+            var bug2 = new Bug("King Scorpio", "scorpion", predatorsForBug2, preyForBug2);
+
+            Console.WriteLine(bug2.PredatorList());
+            Console.WriteLine(bug2.PreyList());
+            Console.WriteLine(bug2.Eat("Fly"));
+
         }
-    }
     }
 }
